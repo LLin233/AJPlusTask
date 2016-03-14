@@ -16,10 +16,13 @@ import retrofit.http.Query;
  * Created by Le on 2016/3/14.
  */
 public class AJVideoEndpoint extends BaseEndpoint {
+    public static final String AJPLUSID = "2848955552001";
+
     public interface VideoService {
         /**
          * http://api.brightcove.com/services/library?command=search_videos&page_size=25
-         * &video_fields=id,name,shortDescription,creationDate,publishedDate,linkURL,linkText,tags,videoStillURL,thumbnailURL,length,renditions,iOSRenditions,HDSRenditions
+         * &video_fields=id,name,shortDescription,creationDate,publishedDate,linkURL,linkText,tags,videoStillURL,thumbnailURL,length,renditions,iOSRenditions,HDSRenditions //given
+         * &video_fields=id,name,shortDescription,thumbnailURL,length,HLSURL  //current using
          * &media_delivery=default
          * &sort_by=PUBLISH_DATE:DESC
          * &page_number=0
@@ -55,7 +58,7 @@ public class AJVideoEndpoint extends BaseEndpoint {
     public void requestLastVideos() {
         Call<JsonElement> calls = mVideoService.getLastVideos("search_videos",
                 25,
-                "id,name,shortDescription,creationDate,publishedDate,linkURL,linkText,tags,videoStillURL,thumbnailURL,length,renditions,iOSRenditions,HDSRenditions",
+                "id,name,shortDescription,thumbnailURL,length,HLSURL",
                 "default",
                 "PUBLISH_DATE:DESC",
                 0,
