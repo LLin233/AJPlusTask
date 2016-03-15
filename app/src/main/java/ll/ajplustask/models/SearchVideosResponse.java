@@ -12,7 +12,7 @@ import java.util.List;
 public class SearchVideosResponse {
     @SerializedName("items")
     @Expose
-    public List<Item> items = new ArrayList<Item>();
+    public List<Item> items;
     @SerializedName("page_number")
     @Expose
     public int pageNumber;

@@ -34,6 +34,7 @@ public class Item implements Parcelable {
         return "Item{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
+                ", shortDescription='" + shortDescription + '\'' +
                 ", videoStillURL='" + videoStillURL + '\'' +
                 ", HLSURL='" + HLSURL + '\'' +
                 '}';
