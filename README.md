@@ -49,4 +49,4 @@ dependencies {
 * network error handling : checking network status before sending request, this requires extra permission. 
 * better look.
 
-## Canditate: Leonard Lin (linle.job@gmail.com)
+## Candidate: Leonard Lin (linle.job@gmail.com)
