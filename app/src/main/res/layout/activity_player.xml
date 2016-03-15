@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="ll.ajplustask.PlayerActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/app_bar"/>
+
+    <com.brightcove.player.view.BrightcoveVideoView
+        android:id="@+id/brightcove_video_view"
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:layout_gravity="center_horizontal|top"/>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:textSize="@dimen/abc_text_size_menu_material"
+        android:textStyle="bold"
+        tools:text="Your job could be eating on YouTube"/>
+
+    <TextView
+        android:id="@+id/shortDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:textSize="@dimen/abc_text_size_caption_material"
+        tools:text="Mukbang eating show star Shoogi explains to us why so many people are tuning in to watch others eat. Fans love to watch their favorite hosts polish off massive amounts of food as they talk and entertain. From video journalist Kurt Achin for AJ+"/>
+
+</LinearLayout>
