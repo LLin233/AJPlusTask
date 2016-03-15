@@ -1,4 +1,4 @@
-package ll.ajplustask;
+package ll.ajplustask.endpoints;
 
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.logging.HttpLoggingInterceptor;

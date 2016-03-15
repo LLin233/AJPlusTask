@@ -1,10 +1,13 @@
-package ll.ajplustask;
+package ll.ajplustask.endpoints;
 
 import android.util.Log;
 
-import com.google.gson.JsonElement;
 import com.squareup.okhttp.logging.HttpLoggingInterceptor;
 
+import org.greenrobot.eventbus.EventBus;
+
+import ll.ajplustask.models.LoadVideoListEvent;
+import ll.ajplustask.models.SearchVideosResponse;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
@@ -14,6 +17,10 @@ import retrofit.http.Query;
 
 /**
  * Created by Le on 2016/3/14.
+ */
+
+/***
+ * Endpoint for making API request and process response
  */
 public class AJVideoEndpoint extends BaseEndpoint {
     public static final String AJPLUSID = "2848955552001";
@@ -30,21 +37,21 @@ public class AJVideoEndpoint extends BaseEndpoint {
          * &token=LD4NFI0aYDQPuMqQcOSikE1iC8cqGaJFyNocNsS708N693c7oNn9lw..
          */
         @GET("library")
-        Call<JsonElement> getLastVideos(@Query("command") String command,
-                                        @Query("page_size") Integer pageSize,
-                                        @Query("video_fields") String fields,
-                                        @Query("media_delivery") String mediaDeliveryOption,
-                                        @Query("sort_by") String condition,
-                                        @Query("page_number") Integer pageNumber,
-                                        @Query("get_item_count") Boolean isGetItemCount,
-                                        @Query("token") String token);
+        Call<SearchVideosResponse> getLastVideos(@Query("command") String command,
+                                                 @Query("page_size") Integer pageSize,
+                                                 @Query("video_fields") String fields,
+                                                 @Query("media_delivery") String mediaDeliveryOption,
+                                                 @Query("sort_by") String condition,
+                                                 @Query("page_number") Integer pageNumber,
+                                                 @Query("get_item_count") Boolean isGetItemCount,
+                                                 @Query("token") String token);
     }
 
-    protected AJVideoEndpoint() {
+    public AJVideoEndpoint() {
         this(GIVENTOKEN);
     }
 
-    protected AJVideoEndpoint(String accessToken) {
+    public AJVideoEndpoint(String accessToken) {
         super(accessToken);
         logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
         httpClient.interceptors().add(logging);
@@ -56,22 +63,21 @@ public class AJVideoEndpoint extends BaseEndpoint {
     private final VideoService mVideoService;
 
     public void requestLastVideos() {
-        Call<JsonElement> calls = mVideoService.getLastVideos("search_videos",
+        Call<SearchVideosResponse> calls = mVideoService.getLastVideos("search_videos",
                 25,
-                "id,name,shortDescription,thumbnailURL,length,HLSURL",
+                "id,name,shortDescription,videoStillURL,length,HLSURL",
                 "default",
                 "PUBLISH_DATE:DESC",
                 0,
                 true,
                 GIVENTOKEN);
-        calls.enqueue(new Callback<JsonElement>() {
+        calls.enqueue(new Callback<SearchVideosResponse>() {
             @Override
-            public void onResponse(Response<JsonElement> response, Retrofit retrofit) {
+            public void onResponse(Response<SearchVideosResponse> response, Retrofit retrofit) {
                 if (response.isSuccess()) {
-                    Log.v(TAG, response.body().toString());
+                    EventBus.getDefault().post(new LoadVideoListEvent(response.body().getItems())); //once list created from json, send event to update listview
                 }
             }
-
             @Override
             public void onFailure(Throwable t) {
 
